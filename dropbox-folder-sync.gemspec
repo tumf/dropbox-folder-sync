@@ -17,6 +17,7 @@ Gem::Specification.new do |gem|
 
   
   gem.add_dependency "rake"
+  gem.add_dependency "bundler"
   gem.add_dependency "thor"
   gem.add_dependency "dropbox-sdk"
   gem.add_dependency "launchy"
