@@ -4,6 +4,7 @@
 require 'dropbox_sdk'
 require 'launchy'
 require 'keystorage'
+require 'json'
 
 class DropboxFolderSync::App
   APP_KEY =  ENV['DROPBOX_FOLDER_SYNC_APP_KEY']
@@ -14,6 +15,15 @@ class DropboxFolderSync::App
       raise "set env vars 'DROPBOX_FOLDER_SYNC_APP_KEY' and 'DROPBOX_FOLDER_SYNC_APP_SECRET'"
     end
     @session = DropboxSession.new(APP_KEY, APP_SECRET)
+  end
+
+  def json name
+    req_key = Keystorage.get("DROPBOX_APP_"+APP_KEY+"_REQ_KEY",name)
+    req_secret = Keystorage.get("DROPBOX_APP_"+APP_KEY+"_REQ_SECRET",name)
+    key = Keystorage.get("DROPBOX_APP_"+APP_KEY+"_USER_KEY",name)
+    secret = Keystorage.get("DROPBOX_APP_"+APP_KEY+"_USER_SECRET",name)
+    h = {:req_key =>req_key, :req_secret =>req_secret, :key =>key, :secret =>secret}
+    puts h.to_json
   end
 
   def login name
@@ -39,20 +49,12 @@ class DropboxFolderSync::App
       end
     end
 
-
     @session.get_request_token
     authorize_url = @session.get_authorize_url
     log "Login: [#{name}] ---> #{authorize_url}"
     Launchy.open authorize_url
     Keystorage.set("DROPBOX_APP_"+APP_KEY+"_REQ_KEY",name,@session.request_token.key.to_s)
     Keystorage.set("DROPBOX_APP_"+APP_KEY+"_REQ_SECRET",name,@session.request_token.secret.to_s)
-    
-    #while 1
-    #  @session.get_access_token rescue {}
-    #  break if @session.authorized?
-    #  sleep 1
-    #end
-    #true
   end
 
   def logout name
@@ -199,6 +201,11 @@ class DropboxFolderSync::App
     def logout name
       new.logout(name)
     end
+
+    def json name
+      new.json name
+    end
+
   end
 
 end

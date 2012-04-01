@@ -22,5 +22,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency "dropbox-sdk"
   gem.add_dependency "launchy"
   gem.add_dependency "keystorage"
+  gem.add_dependency "json"
 
 end

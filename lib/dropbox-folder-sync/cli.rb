@@ -20,6 +20,12 @@ class DropboxFolderSync::CLI < Thor
   def sync remote,local
     DropboxFolderSync::App.sync(remote,local,options)
   end
+
+  desc 'json [NAME]', "Output scedentials in json fomat."
+  def json name = "default"
+    DropboxFolderSync::App.json name
+  end
+
 end
 
 if $0 == __FILE__
