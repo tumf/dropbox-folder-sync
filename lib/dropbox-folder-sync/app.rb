@@ -25,21 +25,39 @@ class DropboxFolderSync::App
       return true if @session.authorized?
     end
 
+    req_key = Keystorage.get("DROPBOX_APP_"+APP_KEY+"_REQ_KEY",name)
+    req_secret = Keystorage.get("DROPBOX_APP_"+APP_KEY+"_REQ_SECRET",name)
+    if req_key and req_secret
+      @session.set_request_token(req_key,req_secret)
+      @session.get_access_token rescue {}
+      if @session.authorized?
+        Keystorage.set("DROPBOX_APP_"+APP_KEY+"_USER_KEY",name,@session.access_token.key.to_s)
+        Keystorage.set("DROPBOX_APP_"+APP_KEY+"_USER_SECRET",name,@session.access_token.secret.to_s)
+        Keystorage.delete("DROPBOX_APP_"+APP_KEY+"_REQ_KEY",name)
+        Keystorage.delete("DROPBOX_APP_"+APP_KEY+"_REQ_SECRET",name)
+        return true
+      end
+    end
+
+
     @session.get_request_token
     authorize_url = @session.get_authorize_url
-    puts "Login: [#{name}] ---> #{authorize_url}"
+    log "Login: [#{name}] ---> #{authorize_url}"
     Launchy.open authorize_url
-    while 1
-      @session.get_access_token rescue {}
-      break if @session.authorized?
-      sleep 1
-    end
-    Keystorage.set("DROPBOX_APP_"+APP_KEY+"_USER_KEY",name,@session.access_token.key.to_s)
-    Keystorage.set("DROPBOX_APP_"+APP_KEY+"_USER_SECRET",name,@session.access_token.secret.to_s)
-    true
+    Keystorage.set("DROPBOX_APP_"+APP_KEY+"_REQ_KEY",name,@session.request_token.key.to_s)
+    Keystorage.set("DROPBOX_APP_"+APP_KEY+"_REQ_SECRET",name,@session.request_token.secret.to_s)
+    
+    #while 1
+    #  @session.get_access_token rescue {}
+    #  break if @session.authorized?
+    #  sleep 1
+    #end
+    #true
   end
 
   def logout name
+    Keystorage.delete("DROPBOX_APP_"+APP_KEY+"_REQ_KEY",name)
+    Keystorage.delete("DROPBOX_APP_"+APP_KEY+"_REQ_SECRET",name)
     Keystorage.delete("DROPBOX_APP_"+APP_KEY+"_USER_KEY",name)
     Keystorage.delete("DROPBOX_APP_"+APP_KEY+"_USER_SECRET",name)
     true
@@ -142,6 +160,8 @@ class DropboxFolderSync::App
     name,@remote_root = parse_remote(remote)
     @local_root = path_normalize(File.expand_path(local))
     login(name) unless @session.authorized?
+    raise "login before sync" unless @session.authorized?
+
     @client = DropboxClient.new(@session, :dropbox)
     log "#{@remote_root} <---> #{@local_root}"
     @local_files = {}
