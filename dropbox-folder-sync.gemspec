@@ -14,4 +14,12 @@ Gem::Specification.new do |gem|
   gem.name          = "dropbox-folder-sync"
   gem.require_paths = ["lib"]
   gem.version       = DropboxFolderSync::VERSION
+
+  
+  gem.add_dependency "rake"
+  gem.add_dependency "thor"
+  gem.add_dependency "dropbox-sdk"
+  gem.add_dependency "launchy"
+  gem.add_dependency "keystorage"
+
 end
