@@ -1,6 +1,7 @@
-# Dropbox::Folder::Sync
+DropboxFolderSync
+=================
 
-TODO: Write a gem description
+Sync Dropbox Folder with Local directory via Dropbox API.
 
 ## Installation
 
