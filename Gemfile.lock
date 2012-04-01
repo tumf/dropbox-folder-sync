@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dropbox-folder-sync (0.0.1)
+    dropbox-folder-sync (0.0.2)
 
 GEM
   remote: https://rubygems.org/
