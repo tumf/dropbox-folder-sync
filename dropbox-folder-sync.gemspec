@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["y.takahara@gmail.com"]
   gem.description   = %q{Sync Dropbox folder with local directory}
   gem.summary       = %q{Sync Dropbox folder with local directory }
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/tumf/dropbox-folder-sync"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
