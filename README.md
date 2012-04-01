@@ -15,10 +15,40 @@ And then execute:
 Or install it yourself as:
 
     $ gem install dropbox-folder-sync
-
+    
 ## Usage
 
-TODO: Write usage instructions here
+### Register your own app
+
+> https://www.dropbox.com/developers/apps
+
+and set env vars.
+
+    export DROPBOX_FOLDER_SYNC_APP_KEY='app-key-form-dropbox'
+    export DROPBOX_FOLDER_SYNC_APP_SECRET='secret key here'
+
+
+### Login and link with Dropbox
+
+    Usage:
+      $ dropbox-folder login [NAME]
+    
+*NAME* is identifer of Dropbox account. Please name your own easy to understand.　*default* is used as name if not specified.
+
+### Synchronize
+
+    Usage:
+      $ dropbox-folder sync [NAME:]/PATH/TO/REMOTE /PATH/TO/LOCAL
+      
+    Options:
+      -i, [--interval=sec] # sync interval (seconds) , default = 1
+      
+    
+### Logout and unlink from Dropbox
+
+    Usage:
+      $ dropbox-folder logout [NAME]
+
 
 ## Contributing
 

@@ -4,8 +4,8 @@ require File.expand_path('../lib/dropbox-folder-sync/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Yoshihiro TAKAHARA"]
   gem.email         = ["y.takahara@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Sync Dropbox folder with local directory}
+  gem.summary       = %q{Sync Dropbox folder with local directory }
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
@@ -13,5 +13,5 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "dropbox-folder-sync"
   gem.require_paths = ["lib"]
-  gem.version       = Dropbox::Folder::Sync::VERSION
+  gem.version       = DropboxFolderSync::VERSION
 end

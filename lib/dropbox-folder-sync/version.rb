@@ -1,7 +1,3 @@
-module Dropbox
-  module Folder
-    module Sync
-      VERSION = "0.0.1"
-    end
-  end
+module DropboxFolderSync
+  VERSION = "0.0.1"
 end

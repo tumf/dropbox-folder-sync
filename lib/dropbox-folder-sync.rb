@@ -1,9 +1,7 @@
-require "dropbox-folder-sync/version"
+require 'rubygems'
+require 'bundler/setup'
 
-module Dropbox
-  module Folder
-    module Sync
-      # Your code goes here...
-    end
-  end
+module DropboxFolderSync
+  autoload :VERSION, "dropbox-folder-sync/version"
+  autoload :CLI, "dropbox-folder-sync/cli"
 end
