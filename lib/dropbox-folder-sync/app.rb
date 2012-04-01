@@ -22,7 +22,7 @@ class DropboxFolderSync::App
     req_secret = Keystorage.get("DROPBOX_APP_"+APP_KEY+"_REQ_SECRET",name)
     key = Keystorage.get("DROPBOX_APP_"+APP_KEY+"_USER_KEY",name)
     secret = Keystorage.get("DROPBOX_APP_"+APP_KEY+"_USER_SECRET",name)
-    h = {:req_key =>req_key, :req_secret =>req_secret, :key =>key, :secret =>secret}
+    h = {:name => name, :req_key =>req_key, :req_secret =>req_secret, :key =>key, :secret =>secret}
     puts h.to_json
   end
 
