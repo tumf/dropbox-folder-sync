@@ -83,6 +83,14 @@ class DropboxFolderSync::App
     @local_root+remote[@remote_root.length..-1]
   end
 
+  def local_files
+    result = {}
+    Dir::glob(@local_root + "/**/*").each { |path|
+      result[path] = local_file_meta(path)
+    }
+    result
+  end
+
   def remote_delta cur
     delta = @client.delta(cur)
     cur = delta["cursor"]
