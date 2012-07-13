@@ -17,6 +17,7 @@ class DropboxFolderSync::CLI < Thor
 
   desc 'sync [NAME:]/PATH/TO/DROPBOX /PATH/TO/REMOTE', "Sync local directory with Dropbox"
   method_option :interval, :type => :numeric, :aliases => "-i", :desc => "Sync interval (sec)", :default => 1
+  method_option :cursor, :type => :string, :aliases => "-c", :desc => "Cursor to start sync", :default => nil
   def sync remote,local
     DropboxFolderSync::App.sync(remote,local,options)
   end

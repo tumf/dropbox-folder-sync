@@ -163,8 +163,8 @@ class DropboxFolderSync::App
 
     @client = DropboxClient.new(@session, :dropbox)
     log "#{@remote_root} <---> #{@local_root}"
-    @local_files = {}
-    cur = nil
+    @local_files = local_files
+    cur = options[:cursor]
     while true
       cur = remote_delta(cur)
       check_local_modified
