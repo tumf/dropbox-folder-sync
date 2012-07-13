@@ -129,7 +129,7 @@ class DropboxFolderSync::App
         @local_files[path] = local_file_meta(path)
         log "<---- #{path}"
         if File.file?(path)
-          @client.put_file(remote, open(path))
+          @client.put_file(remote, open(path),true)
         elsif File.directory?(path)
           @client.file_create_folder(remote)
         end
@@ -139,7 +139,8 @@ class DropboxFolderSync::App
       # modified
       if File.file?(path) and File.mtime(path) > @local_files[path][:modified]
         @local_files[path] = local_file_meta(path)
-        @client.put_file(remote, open(path))
+        log "<---- #{path}"
+        @client.put_file(remote, open(path),true)
       end
     }
   end
