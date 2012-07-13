@@ -75,11 +75,21 @@ class DropboxFolderSync::App
       :id_dir => File.directory?(path)}
   end
 
+  def in_local_root? local
+    local == @local_root or /^#{@local_root}\// =~ local
+  end
+
   def remote_path local
+    return nil unless in_local_root?(local)
     @remote_root+local[@local_root.length..-1]
   end
 
+  def in_remote_root? remote
+    remote == @remote_root or /^#{@remote_root}\// =~ remote
+  end
+
   def local_path remote
+    return nil unless in_remote_root?(remote)
     @local_root+remote[@remote_root.length..-1]
   end
 
@@ -101,6 +111,7 @@ class DropboxFolderSync::App
 
     delta["entries"].each { |path,meta|
       local = local_path(path)
+      next unless local
       if path == @remote_root or /^#{@remote_root}\// =~ path
         unless meta
           if File.exists?(local)
