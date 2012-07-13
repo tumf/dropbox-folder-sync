@@ -88,10 +88,7 @@ class DropboxFolderSync::App
     cur = delta["cursor"]
 
     if delta["reset"] == "true"
-      @local_files = {}
-      Dir::glob(@local_root + "/**/*").each { |path|
-        @local_files[path] = local_file_meta(path)
-      }
+      @local_files = local_files
     end
 
     delta["entries"].each { |path,meta|
